@@ -1,0 +1,100 @@
+/* Reset and Basic Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+}
+
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: url('christmasbg.jpg') no-repeat center center fixed; /* Replace with your image */
+    background-size: cover;
+    z-index: -1;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    height: 100vh;
+}
+
+h1 {
+    font-size: 4em;
+    margin-bottom: 20px;
+    color: #ff4c4c;
+    -webkit-text-stroke: 1px #000;
+}
+
+/* Center the countdown timer */
+.countdown-timer {
+    display: inline-block;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Mute Button Positioned in Top-Left Corner */
+#muteButton {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    color: #ffffff;
+    background-color: #ff4c4c;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 100;
+}
+
+#muteButton:hover {
+    background-color: #e03b3b;
+}
+
+/* Snowflakes Animation */
+.snowflakes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.snowflake {
+    position: absolute;
+    font-size: 1.5em;
+    color: #ffffff;
+    opacity: 0.8;
+    animation: fall linear infinite;
+}
+
+.snowflake:nth-child(1) { left: 10%; animation-duration: 10s; }
+.snowflake:nth-child(2) { left: 30%; animation-duration: 12s; }
+.snowflake:nth-child(3) { left: 50%; animation-duration: 8s; }
+.snowflake:nth-child(4) { left: 70%; animation-duration: 14s; }
+.snowflake:nth-child(5) { left: 90%; animation-duration: 11s; }
+
+@keyframes fall {
+    0% { transform: translateY(-100vh); }
+    100% { transform: translateY(100vh); }
+}

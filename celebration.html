@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christmas Celebration</title>
+    <style>
+        /* Fullscreen video styling */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: black;
+        }
+
+        video {
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+        }
+
+        #secondVideo {
+            display: none; /* Hide second video initially */
+        }
+    </style>
+</head>
+<body>
+    <!-- First video: autoplay without controls, no loop -->
+    <video id="firstVideo" autoplay muted playsinline>
+        <source src="1mc.mp4" type="video/mp4"> <!-- Replace with the first video file -->
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Second video: autoplay, no controls, loops indefinitely -->
+    <video id="secondVideo" autoplay loop playsinline>
+        <source src="2mc.mp4" type="video/mp4"> <!-- Replace with the second video file -->
+        Your browser does not support the video tag.
+    </video>
+
+    <script>
+        const firstVideo = document.getElementById('firstVideo');
+        const secondVideo = document.getElementById('secondVideo');
+
+        // Explicitly remove controls from the first video if they appear
+        firstVideo.removeAttribute('controls');
+
+        // When the first video ends, hide it and autoplay the second video
+        firstVideo.addEventListener('ended', () => {
+            firstVideo.style.display = 'none'; // Hide the first video
+            secondVideo.style.display = 'block'; // Show the second video
+            secondVideo.play(); // Autoplay the second video (it loops)
+        });
+    </script>
+</body>
+</html>
