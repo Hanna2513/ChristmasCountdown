@@ -3,9 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Christmas Countdown</title>
+    <title>Christmas Countdown with Playlist</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.logwork.com/widget/countdown.js"></script> <!-- Embed countdown script -->
+    <style>
+        /* Additional styling for playlist controls */
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 10px 15px;
+            font-size: 1em;
+            color: white;
+            background-color: #ff4c4c;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #e03b3b;
+        }
+    </style>
 </head>
 <body>
     <div class="background">
@@ -20,16 +42,79 @@
         <div class="container">
             <h1>🎄 Christmas Countdown 🎄</h1>
             <!-- Embedded Countdown Timer -->
-            <script src="https://cdn.logwork.com/widget/countdown.js"></script>
-<a href="https://logwork.com/countdown-timer" class="countdown-timer" data-timezone="Asia/Jerusalem" data-textcolor="#ffffff" data-date="2024-12-25 00:00" data-background="#19a630" data-digitscolor="#e30909" data-unitscolor="#ff0000">‎ </a>
+            <a href="https://logwork.com/countdown-timer" class="countdown-timer" data-timezone="Asia/Jerusalem" data-textcolor="#ffffff" data-date="2024-12-25 00:00" data-background="#19a630" data-digitscolor="#e30909" data-unitscolor="#ff0000">‎ </a>
             
-            <button id="muteButton">🔊 Mute Music</button>
-            <center><h3>Made by : Hanna Mahshi<h3><center>
+            <!-- Playlist audio element (for the playlist functionality) -->
+            <audio id="audioPlayer" autoplay></audio>
+            
+            <!-- Playlist controls -->
+            <div class="controls">
+                <button id="prevButton">⏮️ Previous</button>
+                <button id="playPauseButton">⏯️ Play/Pause</button>
+                <button id="nextButton">⏭️ Next</button>
+            </div>
+
+            <button id="muteButton">🔊 Mute Playlist</button>
+            <center><h3>Made by: Hanna Mahshi</h3></center>
         </div>
-        <audio id="backgroundMusic" loop>
-            <source src="yttw.mp3" type="audio/mp3"> <!-- Replace with your audio file -->
-        </audio>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        // Playlist setup
+        const playlist = [
+            "song1.mp3",  // Replace with your first audio file path
+            "song2.mp3",  // Replace with your second audio file path
+            "song3.mp3"   // Replace with your third audio file path
+        ];
+
+        let currentTrack = 0;
+        const audioPlayer = document.getElementById('audioPlayer');
+        const playPauseButton = document.getElementById('playPauseButton');
+        const muteButton = document.getElementById('muteButton');
+
+        // Load the initial track and autoplay
+        audioPlayer.src = playlist[currentTrack];
+        audioPlayer.play();
+
+        // Function to play the next track
+        function playNextTrack() {
+            currentTrack = (currentTrack + 1) % playlist.length;
+            audioPlayer.src = playlist[currentTrack];
+            audioPlayer.play();
+        }
+
+        // Function to play the previous track
+        function playPreviousTrack() {
+            currentTrack = (currentTrack - 1 + playlist.length) % playlist.length;
+            audioPlayer.src = playlist[currentTrack];
+            audioPlayer.play();
+        }
+
+        // Toggle play/pause
+        function togglePlayPause() {
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                playPauseButton.innerText = "⏸️ Pause";
+            } else {
+                audioPlayer.pause();
+                playPauseButton.innerText = "▶️ Play";
+            }
+        }
+
+        // Toggle mute/unmute
+        function toggleMute() {
+            audioPlayer.muted = !audioPlayer.muted;
+            muteButton.innerText = audioPlayer.muted ? "🔇 Unmute Playlist" : "🔊 Mute Playlist";
+        }
+
+        // Play next track automatically when the current one ends
+        audioPlayer.addEventListener('ended', playNextTrack);
+
+        // Event listeners for playlist controls
+        document.getElementById('nextButton').addEventListener('click', playNextTrack);
+        document.getElementById('prevButton').addEventListener('click', playPreviousTrack);
+        playPauseButton.addEventListener('click', togglePlayPause);
+        muteButton.addEventListener('click', toggleMute);
+    </script>
 </body>
 </html>
