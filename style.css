@@ -4,7 +4,6 @@
     padding: 0;
     box-sizing: border-box;
 }
-
 body, html {
     height: 100%;
     display: flex;
@@ -38,6 +37,12 @@ body, html {
 
 h1 {
     font-size: 4em;
+    margin-bottom: 20px;
+    color: #ff4c4c;
+    -webkit-text-stroke: 1px #000;
+}
+h3 {
+    font-size: 2em;
     margin-bottom: 20px;
     color: #ff4c4c;
     -webkit-text-stroke: 1px #000;
