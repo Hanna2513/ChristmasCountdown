@@ -24,9 +24,9 @@ const notification = document.getElementById('notification');
 
 // Playlist Array
 const playlist = [
-    "dth.mp3",  // Replace with your first audio file path
-    "song2.mp3",  // Replace with your second audio file path
-    "song3.mp3"   // Replace with your third audio file path
+    "TLDM.mp3",  // Replace with your first audio file path
+    "dth.mp3",  // Replace with your second audio file path
+    "ytww.mp3"   // Replace with your third audio file path
 ];
 
 let currentTrack = 0;
