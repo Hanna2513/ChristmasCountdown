@@ -181,6 +181,7 @@
         const candle = document.getElementById('candle');
         const clickCounter = document.getElementById('clickCounter');
         const notification = document.getElementById('notification');
+        const nextClickInfo = document.getElementById('nextClickInfo');
         const audioPlayer = document.getElementById('audioPlayer');
         const muteButton = document.getElementById('muteButton');
 
@@ -193,6 +194,21 @@
         // Initialize daily click limitation
         const today = new Date().toISOString().slice(0, 10);
         const lastClickDate = localStorage.getItem('lastClickDate');
+
+        // Function to calculate the next click time
+        function calculateNextClickTime() {
+            const nextDate = new Date();
+            nextDate.setDate(nextDate.getDate() + 1);
+            nextDate.setHours(0, 0, 0, 0);
+            return nextDate;
+        }
+
+        // Display next available click time if already clicked today
+        if (lastClickDate === today) {
+            const nextClickDate = calculateNextClickTime();
+            nextClickInfo.innerText = `You can light the candle again at: ${nextClickDate.toLocaleString()}`;
+            candle.src = "candle_lit.png";
+        }
 
         candle.addEventListener('click', () => {
             if (lastClickDate === today) {
@@ -214,6 +230,10 @@
             setTimeout(() => {
                 notification.style.display = "none";
             }, 3000);
+
+            // Update next click time display
+            const nextClickDate = calculateNextClickTime();
+            nextClickInfo.innerText = `You can light the candle again at: ${nextClickDate.toLocaleString()}`;
         });
 
         // Mute button functionality
