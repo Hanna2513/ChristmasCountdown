@@ -244,6 +244,45 @@
         // Check last click date to enforce daily click restriction
         const today = new Date().toISOString().slice(0, 10);
         const lastClickDate = localStorage.getItem('lastClickDate');
+        // Candle functionality
+        const candle = document.getElementById('candle');
+        const clickCounter = document.getElementById('clickCounter');
+        const notification = document.getElementById('notification');
+
+        // Function to light the candle
+        function lightCandle() {
+            if (lastClickDate === today) {
+                alert("You can only light the candle once per day. Come back tomorrow!");
+                return;
+            }
+
+            // Increase the click counter and store it
+            totalClicks++;
+            localStorage.setItem('totalClicks', totalClicks);
+            clickCounter.innerText = `Candle lit count: ${totalClicks}`;
+
+            // Update the last click date
+            localStorage.setItem('lastClickDate', today);
+
+            // Change the candle image and show the notification
+            candle.src = candleLit;
+            notification.style.display = "block";
+
+            // Fade out notification after 3 seconds and refresh the page
+            setTimeout(() => {
+                notification.style.display = "none";
+                location.reload(); // Refresh the page after clicking
+            }, 3000);
+        }
+
+        // Attach event listener to the candle image
+        candle.addEventListener('click', () => {
+            candle.style.opacity = 0;
+            setTimeout(() => {
+                lightCandle();
+                candle.style.opacity = 1;
+            }, 500);
+        });
 
         // Function to light the candle
         function lightCandle() {
