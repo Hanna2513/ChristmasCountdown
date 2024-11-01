@@ -1,17 +1,39 @@
-// Firebase configuration (replace with your actual Firebase config)
-const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    databaseURL: "YOUR_DATABASE_URL",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
-};
+// Import Firebase functions
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
+import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
 
+// Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyCvHfn7RT8g_BGm-RCQipsAnJ8-1vlH-Mc",
+    authDomain: "christmas-countdown-fa1a0.firebaseapp.com",
+    databaseURL: "https://christmas-countdown-fa1a0-default-rtdb.firebaseio.com",
+    projectId: "christmas-countdown-fa1a0",
+    storageBucket: "christmas-countdown-fa1a0.firebasestorage.app",
+    messagingSenderId: "241407518474",
+    appId: "1:241407518474:web:bcb883ba7f82ee3cb3bcf3",
+    measurementId: "G-BRSJM585YM"
+  };
+  
 // Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
-const database = firebase.database(app);
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const database = getDatabase(app);
+
+// Function to set up candle clicks
+export function setupCandleClicks() {
+    const candleClicksRef = ref(database, 'candleClicks');
+    onValue(candleClicksRef, (snapshot) => {
+        const totalClicks = snapshot.val() || 0;
+        document.getElementById('clickCounter').innerText = `Candle lit count: ${totalClicks}`;
+    });
+
+    document.getElementById('candle').addEventListener('click', () => {
+        runTransaction(candleClicksRef, (currentClicks) => {
+            return (currentClicks || 0) + 1;
+        });
+    });
+}
 
 // Reference to audio element and control buttons
 const audioPlayer = document.getElementById('audioPlayer');
