@@ -4,27 +4,110 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Christmas Countdown with Playlist and Candle</title>
-    <link rel="stylesheet" href="style.css">
     <script src="https://cdn.logwork.com/widget/countdown.js"></script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyCvHfn7RT8g_BGm-RCQipsAnJ8-1vlH-Mc",
+          authDomain: "christmas-countdown-fa1a0.firebaseapp.com",
+          databaseURL: "https://christmas-countdown-fa1a0-default-rtdb.firebaseio.com",
+          projectId: "christmas-countdown-fa1a0",
+          storageBucket: "christmas-countdown-fa1a0.firebasestorage.app",
+          messagingSenderId: "241407518474",
+          appId: "1:241407518474:web:bcb883ba7f82ee3cb3bcf3",
+          measurementId: "G-BRSJM585YM"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+      </script>
     <style>
-        /* Additional styling */
-        body, html {
+        /* Reset and Basic Styles */
+        * {
             margin: 0;
             padding: 0;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background-color: black;
-            color: white;
-            text-align: center;
+            box-sizing: border-box;
         }
 
+        body, html {
+            height: 100%;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: url('christmasbg.jpg') no-repeat center center fixed; /* Ensure path is correct */
+            background-size: cover;
+        }
+
+        /* Snowflakes */
+        .snowflakes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .snowflake {
+            position: absolute;
+            font-size: 1.5em;
+            color: #ffffff;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+
+        .snowflake:nth-child(1) { left: 10%; animation-duration: 10s; }
+        .snowflake:nth-child(2) { left: 30%; animation-duration: 12s; }
+        .snowflake:nth-child(3) { left: 50%; animation-duration: 8s; }
+        .snowflake:nth-child(4) { left: 70%; animation-duration: 14s; }
+        .snowflake:nth-child(5) { left: 90%; animation-duration: 11s; }
+
+        @keyframes fall {
+            0% { transform: translateY(-100vh); }
+            100% { transform: translateY(100vh); }
+        }
+
+        /* Title Styling */
+        h1 {
+            font-size: 3.5em;
+            color: #ff4c4c;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+            -webkit-text-stroke: 1px black;
+            margin: 20px 0;
+        }
+
+        /* Centered Countdown Container */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            margin-top: 50px;
+        }
+
+        /* Top-Left Controls */
         .controls {
-            margin-top: 20px;
+            position: fixed;
+            top: 20px;
+            left: 20px;
             display: flex;
             gap: 10px;
+            z-index: 10;
         }
 
         button {
@@ -35,72 +118,195 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
         }
 
         button:hover {
             background-color: #e03b3b;
         }
 
-        /* Candle styling */
+        /* Candle Styling */
         .candle-container {
             position: fixed;
-            bottom: 50px;
+            bottom: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 5px;
         }
 
         .candle {
-            width: 100px;
+            width: 50px;
             height: auto;
             cursor: pointer;
-            transition: opacity 0.5s ease; /* Fade effect */
+            transition: opacity 0.5s ease;
         }
 
         .notification {
-            margin-top: 10px;
             font-size: 1.2em;
             color: #ffdb58;
-            display: none; /* Initially hidden */
+            display: none;
+            margin-top: 10px;
+        }
+
+        /* Candle Click Counter Styling */
+        #clickCounter {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+            color: #ffdb58;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
 <body>
-    <script src="script.js"></script>
-    <div class="background">
-        <div class="snowflakes">
-            <div class="snowflake">❆</div>
-            <div class="snowflake">❅</div>
-            <div class="snowflake">❆</div>
-            <div class="snowflake">❅</div>
-            <div class="snowflake">❆</div>
-            <div class="snowflake">❅</div>
-        </div>
-        <div class="container">
-            <h1>🎄 Christmas Countdown 🎄</h1>
-            <!-- Embedded Countdown Timer -->
-            <a href="https://logwork.com/countdown-timer" class="countdown-timer" data-timezone="Asia/Jerusalem" data-textcolor="#ffffff" data-date="2024-12-25 00:00" data-background="#19a630" data-digitscolor="#e30909" data-unitscolor="#ff0000">‎ </a>
-            
-            <!-- Playlist audio element -->
-            <audio id="audioPlayer" autoplay></audio>
-            
-            <!-- Playlist controls -->
-            <div class="controls">
-                <button id="prevButton">⏮️ Previous</button>
-                <button id="playPauseButton">⏯️ Play/Pause</button>
-                <button id="nextButton">⏭️ Next</button>
-            </div>
-            <button id="muteButton">🔊 Mute Playlist</button>
-        </div>
+    <!-- Snowflakes Animation -->
+    <div class="snowflakes">
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
     </div>
-<br>
-<br>
+
+    <!-- Title and Countdown -->
+    <div class="container">
+        <h1> Christmas Countdown </h1>
+        <a href="https://logwork.com/countdown-timer" class="countdown-timer" data-timezone="Asia/Jerusalem" data-textcolor="#ffffff" data-date="2024-12-25 00:00" data-background="#19a630" data-digitscolor="#e30909" data-unitscolor="#ff0000">‎ </a>
+    </div>
+
+    <!-- Playlist audio element -->
+    <audio id="audioPlayer" autoplay></audio>
+
+    <!-- Playlist Controls -->
+    <div class="controls">
+        <button id="prevButton">⏮️</button>
+        <button id="playPauseButton">⏯️</button>
+        <button id="nextButton">⏭️</button>
+        <button id="muteButton">🔊</button>
+    </div>
+
     <!-- Candle Section -->
     <div class="candle-container">
         <div id="clickCounter">Candle lit count: 0</div>
         <img id="candle" src="unlitcandle.png" alt="Candle" class="candle">
         <div id="notification" class="notification">You lit the candle! 🎉</div>
     </div>
+
+    <!-- JavaScript Functionality -->
+    <script>
+        // Playlist setup
+        const playlist = [
+            "dth.mp3",  // Replace with your first audio file path
+            "song2.mp3",  // Replace with your second audio file path
+            "song3.mp3"   // Replace with your third audio file path
+        ];
+
+        let currentTrack = 0;
+        const audioPlayer = document.getElementById('audioPlayer');
+        const playPauseButton = document.getElementById('playPauseButton');
+        const muteButton = document.getElementById('muteButton');
+
+        // Load the initial track and autoplay
+        audioPlayer.src = playlist[currentTrack];
+        audioPlayer.play();
+
+        // Function to play the next track
+        function playNextTrack() {
+            currentTrack = (currentTrack + 1) % playlist.length;
+            audioPlayer.src = playlist[currentTrack];
+            audioPlayer.play();
+        }
+
+        // Function to play the previous track
+        function playPreviousTrack() {
+            currentTrack = (currentTrack - 1 + playlist.length) % playlist.length;
+            audioPlayer.src = playlist[currentTrack];
+            audioPlayer.play();
+        }
+
+        // Toggle play/pause
+        function togglePlayPause() {
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                playPauseButton.innerText = "⏸️";
+            } else {
+                audioPlayer.pause();
+                playPauseButton.innerText = "▶️";
+            }
+        }
+
+        // Toggle mute/unmute
+        function toggleMute() {
+            audioPlayer.muted = !audioPlayer.muted;
+            muteButton.innerText = audioPlayer.muted ? "🔇" : "🔊";
+        }
+
+        // Play next track automatically when the current one ends
+        audioPlayer.addEventListener('ended', playNextTrack);
+
+        // Event listeners for playlist controls
+        document.getElementById('nextButton').addEventListener('click', playNextTrack);
+        document.getElementById('prevButton').addEventListener('click', playPreviousTrack);
+        playPauseButton.addEventListener('click', togglePlayPause);
+        muteButton.addEventListener('click', toggleMute);
+
+        // Candle functionality
+        const candle = document.getElementById('candle');
+        const clickCounter = document.getElementById('clickCounter');
+        const notification = document.getElementById('notification');
+        
+        // Paths for candle images
+        const candleUnlit = 'unlitcandle.png'; 
+        const candleLit = 'litcandle.png';     
+
+        // Initialize click counter
+        let totalClicks = localStorage.getItem('totalClicks') ? parseInt(localStorage.getItem('totalClicks')) : 0;
+        clickCounter.innerText = `Candle lit count: ${totalClicks}`;
+
+        // Check last click date to enforce daily click restriction
+        const today = new Date().toISOString().slice(0, 10);
+        const lastClickDate = localStorage.getItem('lastClickDate');
+
+        // Function to light the candle
+        function lightCandle() {
+            if (lastClickDate === today) {
+                alert("You can only light the candle once per day. Come back tomorrow!");
+                return;
+            }
+
+            // Increase the click counter and store it
+            totalClicks++;
+            localStorage.setItem('totalClicks', totalClicks);
+            clickCounter.innerText = `Candle lit count: ${totalClicks}`;
+
+            // Update the last click date
+            localStorage.setItem('lastClickDate', today);
+
+            // Change the candle image and show the notification
+            candle.src = candleLit;
+            notification.style.display = "block"; 
+
+            // Fade out notification after 3 seconds
+            setTimeout(() => {
+                notification.style.display = "none";
+            }, 3000);
+        }
+
+        // Attach event listener to the candle image
+        candle.addEventListener('click', () => {
+            candle.style.opacity = 0;
+            setTimeout(() => {
+                lightCandle();
+                candle.style.opacity = 1;
+            }, 500);
+        });
+
+        // Set candle to lit if already clicked today
+        if (lastClickDate === today) {
+            candle.src = candleLit;
+        }
+    </script>
 </body>
 </html>
