@@ -264,9 +264,10 @@
             candle.src = candleLit;
             notification.style.display = "block"; 
 
-            // Fade out notification after 3 seconds
+             // Fade out notification after 3 seconds and refresh the page
             setTimeout(() => {
                 notification.style.display = "none";
+                location.reload(); // Refresh the page after clicking
             }, 3000);
         }
 
