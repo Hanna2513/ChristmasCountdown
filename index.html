@@ -157,96 +157,132 @@
 
     <!-- Playlist Controls -->
     <div class="controls">
-        <button id="prevButton">⏮️</button>
-        <button id="playPauseButton">⏯️</button>
-        <button id="nextButton">⏭️</button>
-        <button id="muteButton">🔊</button>
+        <button id="prevButton">⏮️ Previous</button>
+        <button id="playPauseButton">⏯️ Play/Pause</button>
+        <button id="nextButton">⏭️ Next</button>
+        <button id="muteButton">🔊 Mute Playlist</button>
     </div>
 
     <!-- Candle Section -->
     <div class="candle-container">
         <div id="clickCounter">Candle lit count: 0</div>
-        <img id="candle" src="unlitcandle.png" alt="Candle" class="candle">
+        <img id="candle" src="candle_unlit.png" alt="Candle" class="candle">
         <div id="notification" class="notification">You lit the candle! 🎉</div>
     </div>
 
     <!-- JavaScript Functionality -->
     <script>
-        // Firebase reference for click count
-        import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
-        const db = getDatabase(app);
-        const clickCounterRef = ref(db, 'candleClicks');
+        // Playlist setup
+        const playlist = [
+            "dth.mp3",  // Replace with your first audio file path
+            "song2.mp3",  // Replace with your second audio file path
+            "song3.mp3"   // Replace with your third audio file path
+        ];
 
-        // HTML element references
+        let currentTrack = 0;
+        const audioPlayer = document.getElementById('audioPlayer');
+        const playPauseButton = document.getElementById('playPauseButton');
+        const muteButton = document.getElementById('muteButton');
+
+        // Load the initial track and autoplay
+        audioPlayer.src = playlist[currentTrack];
+        audioPlayer.play();
+
+        // Function to play the next track
+        function playNextTrack() {
+            currentTrack = (currentTrack + 1) % playlist.length;
+            audioPlayer.src = playlist[currentTrack];
+            audioPlayer.play();
+        }
+
+        // Function to play the previous track
+        function playPreviousTrack() {
+            currentTrack = (currentTrack - 1 + playlist.length) % playlist.length;
+            audioPlayer.src = playlist[currentTrack];
+            audioPlayer.play();
+        }
+
+        // Toggle play/pause
+        function togglePlayPause() {
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                playPauseButton.innerText = "⏸️ Pause";
+            } else {
+                audioPlayer.pause();
+                playPauseButton.innerText = "▶️ Play";
+            }
+        }
+
+        // Toggle mute/unmute
+        function toggleMute() {
+            audioPlayer.muted = !audioPlayer.muted;
+            muteButton.innerText = audioPlayer.muted ? "🔇 Unmute Playlist" : "🔊 Mute Playlist";
+        }
+
+        // Play next track automatically when the current one ends
+        audioPlayer.addEventListener('ended', playNextTrack);
+
+        // Event listeners for playlist controls
+        document.getElementById('nextButton').addEventListener('click', playNextTrack);
+        document.getElementById('prevButton').addEventListener('click', playPreviousTrack);
+        playPauseButton.addEventListener('click', togglePlayPause);
+        muteButton.addEventListener('click', toggleMute);
+
+        // Candle functionality
         const candle = document.getElementById('candle');
         const clickCounter = document.getElementById('clickCounter');
         const notification = document.getElementById('notification');
-        const nextClickInfo = document.getElementById('nextClickInfo');
-        const audioPlayer = document.getElementById('audioPlayer');
-        const muteButton = document.getElementById('muteButton');
+        
+        // Paths for candle images
+        const candleUnlit = 'unlitcandle.png'; 
+        const candleLit = 'litcandle.png';     
 
-        // Retrieve and display current total click count
-        onValue(clickCounterRef, (snapshot) => {
-            const totalClicks = snapshot.val() || 0;
-            clickCounter.innerText = `Candle lit count: ${totalClicks}`;
-        });
+        // Initialize click counter
+        let totalClicks = localStorage.getItem('totalClicks') ? parseInt(localStorage.getItem('totalClicks')) : 0;
+        clickCounter.innerText = `Candle lit count: ${totalClicks}`;
 
-        // Initialize daily click limitation
+        // Check last click date to enforce daily click restriction
         const today = new Date().toISOString().slice(0, 10);
         const lastClickDate = localStorage.getItem('lastClickDate');
 
-        // Function to calculate the next click time
-        function calculateNextClickTime() {
-            const nextDate = new Date();
-            nextDate.setDate(nextDate.getDate() + 1);
-            nextDate.setHours(0, 0, 0, 0);
-            return nextDate;
-        }
-
-        // Display next available click time if already clicked today
-        if (lastClickDate === today) {
-            const nextClickDate = calculateNextClickTime();
-            nextClickInfo.innerText = `You can light the candle again at: ${nextClickDate.toLocaleString()}`;
-            candle.src = "candle_lit.png";
-        }
-
-        candle.addEventListener('click', () => {
+        // Function to light the candle
+        function lightCandle() {
             if (lastClickDate === today) {
                 alert("You can only light the candle once per day. Come back tomorrow!");
                 return;
             }
 
-            // Increment the click count in Firebase
-            runTransaction(clickCounterRef, (currentClicks) => {
-                return (currentClicks || 0) + 1;
-            });
+            // Increase the click counter and store it
+            totalClicks++;
+            localStorage.setItem('totalClicks', totalClicks);
+            clickCounter.innerText = `Candle lit count: ${totalClicks}`;
 
-            // Store today's date in localStorage
+            // Update the last click date
             localStorage.setItem('lastClickDate', today);
 
-            // Change candle image to lit
-            candle.src = "candle_lit.png";
-            notification.style.display = "block";
+            // Change the candle image and show the notification
+            candle.src = candleLit;
+            notification.style.display = "block"; 
+
+            // Fade out notification after 3 seconds
             setTimeout(() => {
                 notification.style.display = "none";
             }, 3000);
+        }
 
-            // Update next click time display
-            const nextClickDate = calculateNextClickTime();
-            nextClickInfo.innerText = `You can light the candle again at: ${nextClickDate.toLocaleString()}`;
+        // Attach event listener to the candle image
+        candle.addEventListener('click', () => {
+            candle.style.opacity = 0;
+            setTimeout(() => {
+                lightCandle();
+                candle.style.opacity = 1;
+            }, 500);
         });
 
-        // Mute button functionality
-        muteButton.addEventListener('click', () => {
-            if (audioPlayer.muted) {
-                audioPlayer.muted = false;
-                muteButton.innerText = '🔊 Mute Playlist';
-            } else {
-                audioPlayer.muted = true;
-                muteButton.innerText = '🔇 Unmute Playlist';
-            }
-        });
+        // Set candle to lit if already clicked today
+        if (lastClickDate === today) {
+            candle.src = candleLit;
+        }
     </script>
-    
 </body>
 </html>
