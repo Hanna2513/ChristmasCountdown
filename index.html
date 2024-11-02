@@ -6,8 +6,8 @@
     <title>Christmas Countdown with Playlist and Candle</title>
     <script src="https://cdn.logwork.com/widget/countdown.js"></script>
     <style>
-        /* Reset and Basic Styles */
-        * {
+       /* Reset and Basic Styles */
+       * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -81,6 +81,7 @@
             -webkit-text-stroke: 0.6px black;
             margin: 20px 0;
         }
+        
         /* Centered Countdown Container */
         .container {
             display: flex;
@@ -128,11 +129,10 @@
         }
 
         .candle {
-            width: 25px;
+            width: 50px;
             height: auto;
             cursor: pointer;
             transition: opacity 0.5s ease;
-            margin: px 0;
         }
 
         .notification {
@@ -146,10 +146,73 @@
         #clickCounter {
             font-size: 1.2em;
             margin-bottom: 5px;
-            color: #ffd000;
+            color: #ffdb58;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
         }
-        
+
+        /* Media Query for Mobile Devices */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+
+            h3 {
+                font-size: 1.2em;
+            }
+
+            h4 {
+                font-size: 1em;
+            }
+
+            .controls {
+                top: 10px;
+                left: 10px;
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            button {
+                padding: 8px 12px;
+                font-size: 0.9em;
+            }
+        }
+
+
+        button:hover {
+            background-color: #e03b3b;
+        }
+
+        /* Candle Styling */
+        .candle-container {
+            position: fixed;
+            bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .candle {
+            width: 50px;
+            height: auto;
+            cursor: pointer;
+            transition: opacity 0.5s ease;
+        }
+
+        .notification {
+            font-size: 1.2em;
+            color: #ffdb58;
+            display: none;
+            margin-top: 10px;
+        }
+
+        /* Candle Click Counter Styling */
+        #clickCounter {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+            color: #ffdb58;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
     </style>
 </head>
 <body>
@@ -179,11 +242,12 @@
         <button id="nextButton">⏭️ Next</button>
         <button id="muteButton">🔊 Mute Playlist</button>
     </div>
-<br>
-<h3>Light a candle for peace till Christmas</h3>
-<h4>You can light a candle once a day</h4>
+
+    <h3>Light a candle for peace till Christmas</h3>
+    <h4>You can light a candle once a day</h4>   
     <!-- Candle Section -->
     <div class="candle-container">
+       
         <img id="candle" src="unlitcandle.png" alt="Candle" class="candle">
         <div id="clickCounter">Candle lit count: 0</div>
         <div id="notification" class="notification">You lit the candle! 🎉</div>
@@ -191,28 +255,7 @@
 
     <!-- JavaScript Functionality -->
     <script>
-       // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyB9Odr1Ztnkb_G69BbJWT1s97OPZ33zjtY",
-  authDomain: "christmas-countdown-8c4ed.firebaseapp.com",
-  databaseURL: "https://christmas-countdown-8c4ed-default-rtdb.firebanpm install firebaseseio.com",
-  projectId: "christmas-countdown-8c4ed",
-  storageBucket: "christmas-countdown-8c4ed.firebasestorage.app",
-  messagingSenderId: "76787603566",
-  appId: "1:76787603566:web:9e21bc40ed4cb50d18ee7f"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-     
-     
-     
-     // Playlist setup
+        // Playlist setup
         const playlist = [
             "dth.mp3",  // Replace with your first audio file path
             "TLDB.mp3",  // Replace with your second audio file path
@@ -304,11 +347,10 @@
             candle.src = candleLit;
             notification.style.display = "block"; 
 
-             // Fade out notification after 3 seconds and refresh the page
+            // Fade out notification after 3 seconds
             setTimeout(() => {
                 notification.style.display = "none";
-                location.reload(); // Refresh the page after clicking
-            }, 1);
+            }, 3000);
         }
 
         // Attach event listener to the candle image
