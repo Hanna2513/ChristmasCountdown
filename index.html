@@ -66,6 +66,21 @@
             margin: 20px 0;
         }
 
+        h3 {
+            font-size: 1.7em;
+            color: #ff9900;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+            -webkit-text-stroke: 1px black;
+            margin: 20px 0;
+        }
+        
+        h4 {
+            font-size: 1.2em;
+            color: #ff9900;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+            -webkit-text-stroke: 0.6px black;
+            margin: 20px 0;
+        }
         /* Centered Countdown Container */
         .container {
             display: flex;
@@ -113,10 +128,11 @@
         }
 
         .candle {
-            width: 50px;
+            width: 100px;
             height: auto;
             cursor: pointer;
             transition: opacity 0.5s ease;
+            margin: px 0;
         }
 
         .notification {
@@ -130,9 +146,10 @@
         #clickCounter {
             font-size: 1.2em;
             margin-bottom: 5px;
-            color: #ffdb58;
+            color: #ffd000;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
         }
+        
     </style>
 </head>
 <body>
@@ -162,11 +179,13 @@
         <button id="nextButton">⏭️ Next</button>
         <button id="muteButton">🔊 Mute Playlist</button>
     </div>
-
+<br>
+<h3>Light a candle for peace till Christmas</h3>
+<h4>You can light a candle once a day</h4>
     <!-- Candle Section -->
     <div class="candle-container">
-        <div id="clickCounter">Candle lit count: 0</div>
         <img id="candle" src="unlitcandle.png" alt="Candle" class="candle">
+        <div id="clickCounter">Candle lit count: 0</div>
         <div id="notification" class="notification">You lit the candle! 🎉</div>
     </div>
 
