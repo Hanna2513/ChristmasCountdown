@@ -128,7 +128,7 @@
         }
 
         .candle {
-            width: 45px;
+            width: 100px;
             height: auto;
             cursor: pointer;
             transition: opacity 0.5s ease;
@@ -191,7 +191,28 @@
 
     <!-- JavaScript Functionality -->
     <script>
-        // Playlist setup
+       // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyB9Odr1Ztnkb_G69BbJWT1s97OPZ33zjtY",
+  authDomain: "christmas-countdown-8c4ed.firebaseapp.com",
+  databaseURL: "https://christmas-countdown-8c4ed-default-rtdb.firebanpm install firebaseseio.com",
+  projectId: "christmas-countdown-8c4ed",
+  storageBucket: "christmas-countdown-8c4ed.firebasestorage.app",
+  messagingSenderId: "76787603566",
+  appId: "1:76787603566:web:9e21bc40ed4cb50d18ee7f"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+     
+     
+     
+     // Playlist setup
         const playlist = [
             "dth.mp3",  // Replace with your first audio file path
             "TLDB.mp3",  // Replace with your second audio file path
