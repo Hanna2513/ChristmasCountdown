@@ -113,10 +113,15 @@
             align-items: center;
         }
 
+
+
+
         button:hover {
             background-color: #e03b3b;
         }
-
+        #donateButton{
+            background-color: rgb(17, 138, 27);
+        }
         /* Candle Styling */
         .candle-container {
             position: fixed;
@@ -128,7 +133,7 @@
         }
 
         .candle {
-            width: 25px;
+            width: 45px;
             height: auto;
             cursor: pointer;
             transition: opacity 0.5s ease;
@@ -150,6 +155,14 @@
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
         }
         
+        img{
+            width: 120px;
+            height: auto;
+            cursor: pointer;
+            transition: opacity 0.5s ease;
+            margin: px 250;
+            left: 12px;
+        }
     </style>
 </head>
 <body>
@@ -174,10 +187,12 @@
 
     <!-- Playlist Controls -->
     <div class="controls">
-        <button id="prevButton">⏮️ Previous</button>
-        <button id="playPauseButton">⏯️ Play/Pause</button>
-        <button id="nextButton">⏭️ Next</button>
-        <button id="muteButton">🔊 Mute Playlist</button>
+        <button id="donateButton" onclick="window.location.href='https://www.paypal.com/donate/?hosted_button_id=FMAKX2ZCVMUXN'">💲 Donate</button>
+        <button id="muteButton">🔊</button>
+        <button id="prevButton">⏮️</button>
+        <button id="playPauseButton">⏯️</button>
+        <button id="nextButton">⏭️</button>
+
     </div>
 <br>
 <h3>Light a candle for peace till Christmas</h3>
@@ -188,6 +203,8 @@
         <div id="clickCounter">Candle lit count: 0</div>
         <div id="notification" class="notification">You lit the candle! 🎉</div>
     </div>
+
+
 
     <!-- JavaScript Functionality -->
     <script>
@@ -225,17 +242,17 @@
         function togglePlayPause() {
             if (audioPlayer.paused) {
                 audioPlayer.play();
-                playPauseButton.innerText = "⏸️ Pause";
+                playPauseButton.innerText = "⏸️";
             } else {
                 audioPlayer.pause();
-                playPauseButton.innerText = "▶️ Play";
+                playPauseButton.innerText = "▶️";
             }
         }
 
         // Toggle mute/unmute
         function toggleMute() {
             audioPlayer.muted = !audioPlayer.muted;
-            muteButton.innerText = audioPlayer.muted ? "🔇 Unmute Playlist" : "🔊 Mute Playlist";
+            muteButton.innerText = audioPlayer.muted ? "🔇" : "🔊";
         }
 
         // Play next track automatically when the current one ends
