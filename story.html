@@ -1,0 +1,148 @@
+<style>
+    /* Styling for the image gallery */
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .gallery-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .gallery-image {
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        position: absolute;
+    }
+
+    .navigation-buttons {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        transform: translateY(-50%);
+    }
+
+    .nav-button {
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 1.2em;
+        transition: background-color 0.3s;
+    }
+
+    .nav-button:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .fullscreen-button {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .fullscreen-button:hover {
+        background-color: #218838;
+    }
+
+    .rotate-message {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        font-size: 1.5em;
+        text-align: center;
+    }
+
+    @media (orientation: portrait) {
+        .rotate-message {
+            display: block;
+        }
+        .gallery-container {
+            display: none;
+        }
+    }
+
+    .image-counter {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 1.2em;
+    }
+</style>
+<div id="imageCounter" class="image-counter">1 / 37</div>
+<div class="rotate-message">Please rotate your phone to landscape mode for the best experience.</div>
+<div class="gallery-container">
+    <div id="galleryImage" class="gallery-image"></div>
+    <div class="navigation-buttons">
+        <button id="prevButton" class="nav-button">Previous</button>
+        <button id="nextButton" class="nav-button">Next</button>
+    </div>
+    <button id="fullscreenButton" class="fullscreen-button">Full Screen</button>
+</div>
+
+<script>
+     const images = [
+        '1.jpeg', '2.jpeg', '3.jpeg', '4.jpeg', '5.jpeg', '6.jpeg', '7.jpeg', '8.jpeg', '9.jpeg', '10.jpeg',
+        '11.jpeg', '12.jpeg', '13.jpeg', '14.jpeg', '15.jpeg', '16.jpeg', '17.jpeg', '18.jpeg', '19.jpeg', '20.jpeg',
+        '21.jpeg', '22.jpeg', '23.jpeg', '24.jpeg', '25.jpeg', '26.jpeg', '27.jpeg', '28.jpeg', '29.jpeg', '30.jpeg',
+        '31.jpeg', '32.jpeg', '33.jpeg', '34.jpeg', '35.jpeg', '36.jpeg', '37.jpeg'
+    ];
+    let currentIndex = 0;
+
+    function updateImage() {
+        document.getElementById('galleryImage').style.backgroundImage = `url('${images[currentIndex]}')`;
+        document.getElementById('imageCounter').innerText = `${currentIndex + 1} / ${images.length}`;
+    }
+
+    document.getElementById('prevButton').addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        updateImage();
+    });
+
+    document.getElementById('nextButton').addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % images.length;
+        updateImage();
+    });
+
+    document.getElementById('fullscreenButton').addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        }
+    });
+
+    // Initial image load
+    updateImage();
+</script>
