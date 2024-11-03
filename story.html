@@ -77,15 +77,6 @@
         text-align: center;
     }
 
-    @media (orientation: portrait) {
-        .rotate-message {
-            display: block;
-        }
-        .gallery-container {
-            display: none;
-        }
-    }
-
     .image-counter {
         position: absolute;
         bottom: 20px;
@@ -97,8 +88,34 @@
         border-radius: 5px;
         font-size: 1.2em;
     }
+
+    .back-button {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .back-button:hover {
+        background-color: #0056b3;
+    }
+
+    @media (orientation: portrait) {
+        .rotate-message {
+            display: block;
+        }
+        .gallery-container {
+            display: none;
+        }
+    }
 </style>
-<div id="imageCounter" class="image-counter">1 / 37</div>
+
 <div class="rotate-message">Please rotate your phone to landscape mode for the best experience.</div>
 <div class="gallery-container">
     <div id="galleryImage" class="gallery-image"></div>
@@ -107,15 +124,19 @@
         <button id="nextButton" class="nav-button">Next</button>
     </div>
     <button id="fullscreenButton" class="fullscreen-button">Full Screen</button>
+    <div id="imageCounter" class="image-counter"></div>
+    <button onclick="window.location.href='index.html'" class="back-button">Back to Home</button>
 </div>
 
 <script>
-     const images = [
+    const imagesFolder = 'images/'; // Folder containing the images
+    const images = [
         '1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg',
-        '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg',
+        '11.jpg', '12.jpe', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg',
         '21.jpg', '22.jpg', '23.jpg', '24.jpg', '25.jpg', '26.jpg', '27.jpg', '28.jpg', '29.jpg', '30.jpg',
         '31.jpg', '32.jpg', '33.jpg', '34.jpg', '35.jpg', '36.jpg', '37.jpg'
-    ];
+    ].map(image => imagesFolder + image);
+
     let currentIndex = 0;
 
     function updateImage() {
