@@ -100,6 +100,7 @@
             display: flex;
             gap: 10px;
             z-index: 10;
+            flex-wrap: wrap;
         }
     /* Basic styling for the main container and category button */
     .playlist-category {
@@ -179,9 +180,6 @@
             align-items: center;
         }
 
-
-
-
         button:hover {
             background-color: #e03b3b;
         }
@@ -230,10 +228,18 @@
             left: 12px;
         }
         /* Style for the facts page button */
-    .facts-button {
-        position: fixed;
-        top: 20px;
-        right: 20px;
+    
+
+    .facts-button:hover {
+        background-color: #bb2d2d;
+    }
+        
+    
+
+         @media screen and (max-width: 600px) {
+            
+         }         
+         .facts-button, .story-button, .game-button {
         background-color: #ff4c4c;
         color: white;
         padding: 10px 15px;
@@ -241,12 +247,10 @@
         border-radius: 5px;
         cursor: pointer;
         transition: background-color 0.3s;
-    }
+        margin-bottom: 5px;
+    }     
 
-    .facts-button:hover {
-        background-color: #bb2d2d;
-    }
-        
+
     </style>
 </head>
 <body>
@@ -273,6 +277,8 @@
     <div class="controls">
         <button id="donateButton" onclick="window.location.href='https://www.paypal.com/donate/?hosted_button_id=GNV9RTZRFQQS4'">Donate</button>
         <button class="facts-button" onclick="window.location.href='facts.html'">Facts</button>
+    <button class="story-button" onclick="window.location.href='story.html'">Christmas Story</button>
+    <button class="game-button" onclick="window.location.href='https://santatracker.google.com/intl/en/'">Game</button>
         <div class="playlist-category">
             <button class="category-button">Playlist Settings</button>
             <div class="dropdown-menu">
