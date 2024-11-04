@@ -265,46 +265,6 @@
         text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
     }
 /* Style for the top donators container */
-.top-donators-container {
-    position: relative;
-    display: inline-block;
-    margin-top: 5px;
-    text-align: center;
-}
-
-/* Style for the Top Donators text */
-.top-donators-text {
-    color: rgb(7, 151, 38);
-    font-size: 1.2em;
-    -webkit-text-stroke: 1px rgb(7, 151, 38);
-    cursor: pointer;
-}
-
-/* Style for the dropdown list */
-.dropdown-list {
-    opacity: 0;
-    visibility: hidden;
-    position: absolute;
-    top: 25px; /* Adjust based on the spacing from the Top Donators text */
-    left: 0;
-    background-color: rgba(3, 148, 34, 0.9);
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
-    z-index: 10;
-    color: white;
-    transition: opacity 0.3s ease, visibility 0.3s;
-}
-
-/* Show the list with smooth animation when hovering */
-.top-donators-container:hover .dropdown-list {
-    opacity: 1;
-    visibility: visible;
-}
-
-.dropdown-list p {
-    margin: 5px 0;
-}
 
 
     </style>
@@ -348,16 +308,7 @@
             </div>
       
     </div>
-    <div class="top-donators-container">
-        <p class="top-donators-text">Top Donators</p>
-        <div class="dropdown-list" id="donatorList">
-            <p>1. כריסתין מחשי</p>
-            <p>Empty</p>
-            <p>Empty</p>
-            <p>Empty</p>
-            <p>Empty</p>
-        </div>
-    </div>
+    
     </div>
     
 <br>
