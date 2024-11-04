@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Christmas Countdown</title>
+    <title>Christmas Countdown with Playlist and Candle</title>
     <script src="https://cdn.logwork.com/widget/countdown.js"></script>
     <link rel="shortcut icon" href="riconccd.png" type="image/x-icon">
     <style>
@@ -179,6 +179,8 @@
             display: flex;
             align-items: center;
         }
+        
+
 
         button:hover {
             background-color: #e03b3b;
@@ -262,6 +264,47 @@
         font-weight: bold;
         text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
     }
+/* Style for the top donators container */
+.top-donators-container {
+    position: relative;
+    display: inline-block;
+    margin-top: 5px;
+    text-align: center;
+}
+
+/* Style for the Top Donators text */
+.top-donators-text {
+    color: rgb(7, 151, 38);
+    font-size: 1.2em;
+    -webkit-text-stroke: 1px rgb(7, 151, 38);
+    cursor: pointer;
+}
+
+/* Style for the dropdown list */
+.dropdown-list {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 25px; /* Adjust based on the spacing from the Top Donators text */
+    left: 0;
+    background-color: rgba(3, 148, 34, 0.9);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    color: white;
+    transition: opacity 0.3s ease, visibility 0.3s;
+}
+
+/* Show the list with smooth animation when hovering */
+.top-donators-container:hover .dropdown-list {
+    opacity: 1;
+    visibility: visible;
+}
+
+.dropdown-list p {
+    margin: 5px 0;
+}
 
 
     </style>
@@ -288,7 +331,7 @@
 
     <!-- Playlist Controls -->
     <div class="controls">
-        <button id="donateButton" onclick="window.location.href='https://www.paypal.com/donate/?hosted_button_id=GNV9RTZRFQQS4'">Donate</button>
+        <button id="donateButton" class="dropdown-btn" onclick="window.location.href='https://www.paypal.com/donate/?hosted_button_id=GNV9RTZRFQQS4'">Donate</button>
         <button class="facts-button" onclick="window.location.href='facts.html'">Facts</button>
     <button class="story-button" onclick="window.location.href='story.html'">Christmas Story</button>
     <button class="game-button" onclick="window.location.href='https://santatracker.google.com/intl/en/'">Game</button>
@@ -299,12 +342,24 @@
                 <button id="playPauseButton">▶️ Play</button>
                 <button id="nextButton">⏭️ Next</button>
                 <button id="muteButton">🔊 Mute</button>
-            
+              
+
+            <h3></h3>
             </div>
       
     </div>
-    
+    <div class="top-donators-container">
+        <p class="top-donators-text">Top Donators</p>
+        <div class="dropdown-list" id="donatorList">
+            <p>1. כריסתין מחשי</p>
+            <p>Empty</p>
+            <p>Empty</p>
+            <p>Empty</p>
+            <p>Empty</p>
+        </div>
     </div>
+    </div>
+    
 <br>
 <h3>Light a candle for peace till Christmas</h3>
 <h4></h4>
